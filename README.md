@@ -1,2 +1,2 @@
 # Simultaneous-pretraining-BERT
-This repo includes Simultaneous python scripts to implement pre-training approach for enhance BioBERTurk language models
+This repo includes  python scripts to implement Simultaneous pre-training approach for enhance BioBERTurk language models
