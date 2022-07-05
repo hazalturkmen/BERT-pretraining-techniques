@@ -176,17 +176,13 @@ def create_float_feature(values):
   feature = tf.train.Feature(float_list=tf.train.FloatList(value=list(values)))
   return feature
 
-def write_file(read_files, fname):
+def read_file(read_files):
   text=""
-  with open(fname, 'w') as outfile:
-    for fname in read_files:
-      with open(fname) as infile:
-        for line in infile:
-          text = text+line+("\n")
 
-          """outfile.write(line)
-        outfile.write("\n")
-  outfile.close()"""
+  for fname in read_files:
+    with open(fname) as infile:
+      for line in infile:
+        text = text+line+("\n")
   return text
 
 def create_training_instances(input_files, tokenizer, max_seq_length,
@@ -206,49 +202,32 @@ def create_training_instances(input_files, tokenizer, max_seq_length,
   files_s = glob.glob("corpus/splitted/small/*")
   files_l = glob.glob("corpus/splitted/large/*")
 
-  for i in range(0, 3):
 
-    c_first = [random.sample(files_s, 1), random.sample(files_l, 1)]
-    c_second = [item for sublist in c_first for item in sublist]
-    #print(c_second)
-    fname = 'result' + str(i) + '.txt'
-    text = write_file(c_second, fname)
 
-    print("creating instance from {}".format(fname))
-    print(text)
-    text = text.strip()
+  c_first = [random.sample(files_s, 1), random.sample(files_l, 1)]
+  c_second = [item for sublist in c_first for item in sublist]
+  text = read_file(c_second)
+
+  text = text.strip()
 
       # Empty lines are used as document delimiters
-    if not text:
-      all_documents.append([])
-    tokens = tokenizer.tokenize(text)
-    if tokens:
-      all_documents[-1].append(tokens)
-    """with open(fname, "r") as reader:
-      while True:
-        line = tokenization.convert_to_unicode(reader.readline())
-        if not line:
-          break
-        line = line.strip()
+  if not text:
+    all_documents.append([])
+  tokens = tokenizer.tokenize(text)
+  if tokens:
+    all_documents[-1].append(tokens)
 
-        # Empty lines are used as document delimiters
-        if not line:
-          all_documents.append([])
-        tokens = tokenizer.tokenize(line)
-        if tokens:
-          all_documents[-1].append(tokens)"""
-    all_documents = [x for x in all_documents if x]
-    rng.shuffle(all_documents)
+  all_documents = [x for x in all_documents if x]
+  rng.shuffle(all_documents)
 
-    vocab_words = list(tokenizer.vocab.keys())
-    instances = []
-    #print(all_documents[0])
-    instances.extend(
-      create_instances_from_document(
-        all_documents, 0, max_seq_length, short_seq_prob,
-        masked_lm_prob, max_predictions_per_seq, vocab_words, rng))
+  vocab_words = list(tokenizer.vocab.keys())
+  instances = []
+  instances.extend(
+    create_instances_from_document(
+      all_documents, 0, max_seq_length, short_seq_prob,
+      masked_lm_prob, max_predictions_per_seq, vocab_words, rng))
 
-    rng.shuffle(instances)
+  rng.shuffle(instances)
 
   return instances
 
@@ -484,7 +463,7 @@ def main(_):
       input_files, tokenizer, FLAGS.max_seq_length, FLAGS.dupe_factor,
       FLAGS.short_seq_prob, FLAGS.masked_lm_prob, FLAGS.max_predictions_per_seq,
       rng)
-  print(instances)
+
 
   output_files = FLAGS.output_file.split(",")
   tf.logging.info("*** Writing to output files ***")
@@ -500,3 +479,4 @@ if __name__ == "__main__":
   flags.mark_flag_as_required("output_file")
   flags.mark_flag_as_required("vocab_file")
   tf.app.run()
+
