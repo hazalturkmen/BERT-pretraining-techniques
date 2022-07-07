@@ -28,8 +28,6 @@ flags = tf.flags
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("input_file", None,
-                    "Input raw text file (or comma-separated list of files).")
 
 flags.DEFINE_string(
     "output_file", None,
@@ -98,8 +96,8 @@ def write_instance_to_example_files(instances, tokenizer, max_seq_length,
                                     max_predictions_per_seq, output_files):
   """Create TF example files from `TrainingInstance`s."""
   writers = []
-  for output_file in output_files:
-    writers.append(tf.python_io.TFRecordWriter(output_file))
+
+  writers.append(tf.python_io.TFRecordWriter(output_files[0]))
 
   writer_index = 0
 
@@ -182,10 +180,11 @@ def read_file(read_files):
   for fname in read_files:
     with open(fname) as infile:
       for line in infile:
-        text = text+line+("\n")
+        text = text+line
+  print(text)
   return text
 
-def create_training_instances(input_files, tokenizer, max_seq_length,
+def create_training_instances(c_second, tokenizer, max_seq_length,
                               dupe_factor, short_seq_prob, masked_lm_prob,
                               max_predictions_per_seq, rng):
   """Create `TrainingInstance`s from raw text."""
@@ -199,13 +198,7 @@ def create_training_instances(input_files, tokenizer, max_seq_length,
   # (2) Blank lines between documents. Document boundaries are needed so
   # that the "next sentence prediction" task doesn't span between documents.
 
-  files_s = glob.glob("corpus/splitted/small/*")
-  files_l = glob.glob("corpus/splitted/large/*")
 
-
-
-  c_first = [random.sample(files_s, 1), random.sample(files_l, 1)]
-  c_second = [item for sublist in c_first for item in sublist]
   text = read_file(c_second)
 
   text = text.strip()
@@ -450,17 +443,22 @@ def main(_):
   tokenizer = tokenization.FullTokenizer(
       vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case)
 
-  input_files = []
-  for input_pattern in FLAGS.input_file.split(","):
-    input_files.extend(tf.gfile.Glob(input_pattern))
+
+
+
+  files_s = glob.glob("corpus/splitted/small/*")
+  files_l = glob.glob("corpus/splitted/large/*")
+
+
+
+  c_first = [random.sample(files_s, 1), random.sample(files_l, 1)]
+  c_second = [item for sublist in c_first for item in sublist]
 
   tf.logging.info("*** Reading from input files ***")
-  for input_file in input_files:
-    tf.logging.info("  %s", input_file)
-
+  tf.logging.info("  %s", c_second)
   rng = random.Random(FLAGS.random_seed)
   instances = create_training_instances(
-      input_files, tokenizer, FLAGS.max_seq_length, FLAGS.dupe_factor,
+      c_second, tokenizer, FLAGS.max_seq_length, FLAGS.dupe_factor,
       FLAGS.short_seq_prob, FLAGS.masked_lm_prob, FLAGS.max_predictions_per_seq,
       rng)
 
@@ -475,7 +473,7 @@ def main(_):
 
 
 if __name__ == "__main__":
-  flags.mark_flag_as_required("input_file")
+  #flags.mark_flag_as_required("input_file")
   flags.mark_flag_as_required("output_file")
   flags.mark_flag_as_required("vocab_file")
   tf.app.run()
