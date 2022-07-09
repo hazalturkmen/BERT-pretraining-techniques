@@ -179,9 +179,8 @@ def read_file(read_files):
 
   for fname in read_files:
     with open(fname) as infile:
-      for line in infile:
-        text = text+line
-  print(text)
+      text="\n".join(line.strip() for line in infile)
+  #print(text)
   return text
 
 def create_training_instances(c_second, tokenizer, max_seq_length,
