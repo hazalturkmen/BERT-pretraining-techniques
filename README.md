@@ -1,5 +1,5 @@
 # A Pipeline Of Simultaneous pretraining with amplified vocabulary Bert On Google TPU
-A tutorial of pertaining Bert on your own dataset using google TPU to implement Simultaneous pre-training with amplified vocabulary approach [1] 
+A pipeline of pertaining Bert on your own dataset using google TPU to implement Simultaneous pre-training with amplified vocabulary approach [1] 
 
 
 # Introduction
