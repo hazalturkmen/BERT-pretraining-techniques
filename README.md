@@ -1,4 +1,4 @@
 # A Pipeline Of Simultaneous pretraining Bert On Google TPU
-This repo includes  python scripts to implement Simultaneous pre-training approach [1] to enhance BioBERTurk language models
+A tutorial of pertaining Bert on your own dataset using google TPU to implement Simultaneous pre-training approach [1] 
 # References
 [1]Wada, S., Takeda, T., Manabe, S., Konishi, S., Kamohara, J., & Matsumura, Y. (2020). Pre-training technique to localize medical bert and enhance biomedical bert. arXiv preprint arXiv:2005.07202.
