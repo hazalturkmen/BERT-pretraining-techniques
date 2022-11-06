@@ -174,14 +174,24 @@ def create_float_feature(values):
   feature = tf.train.Feature(float_list=tf.train.FloatList(value=list(values)))
   return feature
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+I added the following read_file function to merge text of files.
+I used python string join function to quickly merge lines in files.
+This function returns string combined the contents of the files given as input
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 def read_file(read_files):
   text=""
 
   for fname in read_files:
     with open(fname) as infile:
       text="\n".join(line.strip() for line in infile)
-  #print(text)
   return text
+
+
+
+
 
 def create_training_instances(c_second, tokenizer, max_seq_length,
                               dupe_factor, short_seq_prob, masked_lm_prob,
@@ -198,9 +208,14 @@ def create_training_instances(c_second, tokenizer, max_seq_length,
   # that the "next sentence prediction" task doesn't span between documents.
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Finally, we give the concatenated text of the sampled files as input to create tf instances
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   text = read_file(c_second)
-
   text = text.strip()
+
+
+
 
       # Empty lines are used as document delimiters
   if not text:
@@ -442,16 +457,19 @@ def main(_):
   tokenizer = tokenization.FullTokenizer(
       vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case)
 
-
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+I added the following four line of codes.
+After splitting files as a small and large according to file size, we can choose files from folders using random python function.
+Then, c_second (list of files) is given as input create_training_instance to create tf_records
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
   files_s = glob.glob("corpus/splitted/small/*")
   files_l = glob.glob("corpus/splitted/large/*")
-
-
-
   c_first = [random.sample(files_s, 1), random.sample(files_l, 1)]
   c_second = [item for sublist in c_first for item in sublist]
+
+
+
 
   tf.logging.info("*** Reading from input files ***")
   tf.logging.info("  %s", c_second)
@@ -472,7 +490,6 @@ def main(_):
 
 
 if __name__ == "__main__":
-  #flags.mark_flag_as_required("input_file")
   flags.mark_flag_as_required("output_file")
   flags.mark_flag_as_required("vocab_file")
   tf.app.run()
