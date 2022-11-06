@@ -19,4 +19,4 @@ The study will be published as a publication...
 
 
 # Acknowledgements
-We would like to acknowledge the support we received from the TPU Research Cloud(TRC) team in providing access to TPUv3 units.
+We would like to acknowledge the TPU Research Cloud program (TRC) and the Google’s CURe program in providing access to TPUv3 units and GCP credits, respectively.
