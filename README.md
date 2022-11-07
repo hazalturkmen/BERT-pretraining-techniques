@@ -1,4 +1,4 @@
-# A Pipeline Of Simultaneous pretraining with amplified vocabulary Bert On Google TPU
+# A Pipeline Of Simultaneous Bert pretraining with amplified vocabulary On Google TPU
 A pipeline of pertaining Bert on biomedical dataset using google TPU to implement Simultaneous pre-training with amplified vocabulary approach [1] 
 
 
