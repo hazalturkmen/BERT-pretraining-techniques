@@ -3,7 +3,7 @@ A pipeline of  various pertaining Bert approaches on text dataset using google T
 
 
 # Introduction
-This repo introduces various pre-training  approaches  to enhance BERT models. All engineering proceses designed for TPU devices. Pre-training methods implemented using [NPL library](https://github.com/tensorflow/models/tree/master/official/nlp) from [TF2 model garden](https://github.com/tensorflow/models/tree/master/official).
+This repo introduces various pre-training  approaches  to enhance generic BERT models. All engineering proceses designed for TPU devices. Pre-training methods implemented using [NPL library](https://github.com/tensorflow/models/tree/master/official/nlp) from [TF2 model garden](https://github.com/tensorflow/models/tree/master/official).
 
  1. Pre-training from scratch
  2. Contiunal pre-training
