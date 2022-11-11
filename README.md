@@ -1,10 +1,13 @@
-# A Pipeline Of Simultaneous Bert pretraining with amplified vocabulary On Google TPU
-A pipeline of pertaining Bert on biomedical dataset using google TPU to implement Simultaneous pre-training with amplified vocabulary approach [1] 
+# A Pipeline Of Bert pretraining  techniques On Google TPU
+A pipeline of  various pertaining Bert approaches on text dataset using google TPU. 
 
 
 # Introduction
-Pretrained language models elevated with in-domain corpora show impressive results in biomedicine and clinical NLP tasks in English. However, there is minimal work in low resource languages.This repo introduces Simultaneous pre-training with amplified vocabulary approach [1] to enhance BERT models which are developed from low resource languages. Unlike implementation of proposed work [1], engineering proceses redesigned for TPU devices.
+This repo introduces various pre-training  approaches  to enhance BERT models. All engineering proceses designed for TPU devices.
 
+ 1. Pre-training from scratch
+ 2. Contiunal pre-training
+ 3. Simultaneous pre-training
 
 
 
