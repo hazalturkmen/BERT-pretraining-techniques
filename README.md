@@ -1,4 +1,4 @@
-# A Pipeline Of Bert pretraining  techniques On Google TPU
+# A Pipeline Of Bert pretraining  techniques On Google TPU-pods
 A pipeline of  various pertaining Bert approaches on text dataset using google TPU. 
 
 
